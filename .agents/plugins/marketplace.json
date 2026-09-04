@@ -1,0 +1,15 @@
+{
+  "name": "suarify-local",
+  "plugins": [
+    {
+      "name": "suarify",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "interface": {
+        "displayName": "Suarify"
+      }
+    }
+  ]
+}

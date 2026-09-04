@@ -1,0 +1,28 @@
+{
+  "name": "suarify",
+  "version": "1.0.0",
+  "description": "AI voice calling for businesses — place outbound calls, manage agents and leads, top up prepaid credit.",
+  "author": {
+    "name": "Suarify",
+    "email": "support@suarify.my",
+    "url": "https://suarify.my"
+  },
+  "homepage": "https://suarify.my",
+  "repository": "https://github.com/dragonjump/suarify-chatgpt-plugin",
+  "license": "MIT",
+  "keywords": ["voice", "calling", "ai-agent", "outbound", "telephony", "mcp"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Suarify",
+    "shortDescription": "Place AI voice calls, manage agents & leads, top up credit.",
+    "longDescription": "Suarify connects ChatGPT to your Suarify prepaid voice account. Place interactive or broadcast outbound calls (default Gemini / Sulafat), schedule campaigns, manage AI agents and leads, review call logs, and generate a Stripe top-up link for your profile. Sign in with Google or email OTP via OAuth — each tool call runs as your own Suarify account.",
+    "developerName": "Suarify",
+    "category": "productivity",
+    "website": "https://suarify.my",
+    "supportUrl": "mailto:support@suarify.my",
+    "privacyPolicyUrl": "https://suarify.my/ttnc.html#privacy",
+    "termsOfServiceUrl": "https://suarify.my/ttnc.html#terms",
+    "logo": "./assets/logo.png"
+  }
+}
