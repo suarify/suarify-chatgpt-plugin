@@ -1,7 +1,7 @@
 {
   "name": "suarify",
-  "version": "1.0.3",
-  "description": "Authenticated AI voice calling for businesses — choose Gemini 3.8 or OpenAI voices, place outbound calls, manage agents and leads, and top up prepaid credit.",
+  "version": "1.0.4",
+  "description": "Authenticated AI voice calling for businesses — choose a supported voice provider and compatible voice, place outbound calls, manage agents and leads, and top up prepaid credit.",
   "author": {
     "name": "Suarify",
     "email": "support@suarify.my",
@@ -16,11 +16,11 @@
   "interface": {
     "displayName": "Suarify",
     "shortDescription": "AI voice calls and lead tools",
-    "longDescription": "Suarify connects ChatGPT to your authenticated Suarify prepaid voice account. Place interactive or broadcast outbound calls, explicitly choose Gemini 3.8 with Sulafat or OpenAI Realtime with a compatible voice, schedule campaigns, manage AI agents and leads, review call logs, and generate a Stripe top-up link tied to your profile. Phone numbers must be E.164, and each tool call runs as your own account after OAuth sign-in.",
+    "longDescription": "Suarify connects ChatGPT to your authenticated Suarify prepaid voice account. Place interactive or broadcast outbound calls, choose a supported voice provider with a compatible voice, schedule campaigns, manage AI agents and leads, review call logs, and generate a Stripe top-up link tied to your profile. Phone numbers must be E.164, and each tool call runs as your own account after OAuth sign-in.",
     "developerName": "Suarify",
     "category": "Productivity",
     "capabilities": [
-      "Place Gemini 3.8 or OpenAI AI voice calls",
+      "Place supported AI voice calls",
       "Manage agents and leads",
       "Check balance and top up credit"
     ],
@@ -68,7 +68,7 @@
             },
             {
               "description": "Schedule an authenticated outbound call.",
-              "prompt": "Schedule a Gemini call to +60111234567 tomorrow at 10:00 +08 with greeting Hello.",
+              "prompt": "Schedule a voice call to +60111234567 tomorrow at 10:00 +08 with greeting Hello.",
               "tools_triggered": "scheduleOutboundCall",
               "expected_behavior": "Return a planned-call confirmation without inventing missing recipient data."
             }
@@ -95,7 +95,7 @@
         "commerce_description": "Suarify supports prepaid credit top-ups by returning a Stripe checkout link; the plugin does not collect payment details in ChatGPT."
       },
       "publication": {
-        "release_notes": "Add the reviewer demo recording, clarify provider and voice fields, E.164 phone formatting, Gemini 3.8 versus OpenAI selection, onboarding examples, and ASEAN availability.",
+        "release_notes": "Add the reviewer demo recording, clarify provider and voice fields, E.164 phone formatting, onboarding examples, and ASEAN availability.",
         "countries": ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "TL", "VN"]
       }
     }

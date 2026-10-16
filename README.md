@@ -33,14 +33,14 @@ For reliable provider selection, pass the provider and compatible voice together
 ```json
 {
   "receipient_phone": "+60123456789",
-  "voice_provider": "GEMINI3.8",
+  "voice_provider": "<supported-provider>",
   "agent_voice": "Sulafat",
   "agent_start_message": "Hello, this is Suarify calling.",
   "agent_prompt": "Have a brief, helpful conversation about the stated goal."
 }
 ```
 
-Use `OPENAI` with an OpenAI Realtime voice such as `alloy` when OpenAI is requested. `GEMINI3.8` is an explicit selection; if `voice_provider` is omitted, the configured agent may route the call to another provider. Always send Malaysian numbers in E.164 form (`+601...`), not local `01...` form.
+Use a provider-compatible voice for the selected backend. If `voice_provider` is omitted, the configured agent may route the call to another supported provider. Always send Malaysian numbers in E.164 form (`+601...`), not local `01...` form.
 
 ## Public publish
 
