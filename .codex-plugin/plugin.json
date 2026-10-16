@@ -1,6 +1,6 @@
 {
   "name": "suarify",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Authenticated AI voice calling for businesses — choose Gemini 3.8 or OpenAI voices, place outbound calls, manage agents and leads, and top up prepaid credit.",
   "author": {
     "name": "Suarify",
@@ -39,6 +39,7 @@
   "extensions": {
     "com.openai": {
       "review": {
+        "demo_recording_url": "https://drive.google.com/file/d/1iUNbXzW7HghqOJFU4CyGIdpplMTcSMZY/view?usp=sharing",
         "test_cases": {
           "positive": [
             {
@@ -94,7 +95,7 @@
         "commerce_description": "Suarify supports prepaid credit top-ups by returning a Stripe checkout link; the plugin does not collect payment details in ChatGPT."
       },
       "publication": {
-        "release_notes": "Clarify provider and voice fields, E.164 phone formatting, Gemini 3.8 versus OpenAI selection, onboarding examples, and ASEAN availability.",
+        "release_notes": "Add the reviewer demo recording, clarify provider and voice fields, E.164 phone formatting, Gemini 3.8 versus OpenAI selection, onboarding examples, and ASEAN availability.",
         "countries": ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "TL", "VN"]
       }
     }
