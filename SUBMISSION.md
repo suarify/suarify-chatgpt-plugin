@@ -10,6 +10,7 @@ Fill the [plugin submission portal](https://developers.openai.com/plugins/deploy
 | Short description | Place AI voice calls, manage agents & leads, top up prepaid credit. |
 | Long description | Suarify connects ChatGPT to your authenticated Suarify prepaid voice account. Place interactive or broadcast outbound calls, explicitly choose Gemini 3.8 with Sulafat or OpenAI Realtime with a compatible voice, schedule campaigns, manage AI agents and leads, review call logs, and open a Stripe top-up link tied to your profile. Phone numbers must be E.164; every tool runs as your own account after OAuth sign-in. |
 | Category | Productivity |
+| Supported countries | BN, KH, ID, LA, MY, MM, PH, SG, TH, TL, VN (ASEAN) |
 | Website | https://suarify.my |
 | Support | support@suarify.my |
 | Privacy | https://suarify.my/ttnc.html#privacy |
@@ -94,9 +95,9 @@ Serve **plain text only** (no JSON). Parent origin `https://suarify.my` is allow
 - `getTopUpLink` does not charge; it only returns the Stripe Payment Link.
 - No custom ChatGPT UI / widgets — MCP tools only (+ skill). CSP: N/A for UI-less.
 
-## Release notes (v1.0.1)
+## Release notes (v1.0.2)
 
-Clarify provider and voice fields, E.164 phone formatting, Gemini 3.8 versus OpenAI selection, and onboarding examples.
+Clarify provider and voice fields, E.164 phone formatting, Gemini 3.8 versus OpenAI selection, onboarding examples, and ASEAN availability.
 
 ## Checklist before Submit for review
 
