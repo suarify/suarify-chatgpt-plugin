@@ -1,7 +1,7 @@
 {
   "name": "suarify",
-  "version": "1.0.0",
-  "description": "AI voice calling for businesses — place outbound calls, manage agents and leads, top up prepaid credit.",
+  "version": "1.0.1",
+  "description": "Authenticated AI voice calling for businesses — choose Gemini 3.8 or OpenAI voices, place outbound calls, manage agents and leads, and top up prepaid credit.",
   "author": {
     "name": "Suarify",
     "email": "support@suarify.my",
@@ -16,11 +16,11 @@
   "interface": {
     "displayName": "Suarify",
     "shortDescription": "AI voice calls and lead tools",
-    "longDescription": "Suarify connects ChatGPT to your Suarify prepaid voice account. Place interactive or broadcast outbound calls (default Gemini / Sulafat), schedule campaigns, manage AI agents and leads, review call logs, and generate a Stripe top-up link for your profile. Sign in with Google or email OTP via OAuth — each tool call runs as your own Suarify account.",
+    "longDescription": "Suarify connects ChatGPT to your authenticated Suarify prepaid voice account. Place interactive or broadcast outbound calls, explicitly choose Gemini 3.8 with Sulafat or OpenAI Realtime with a compatible voice, schedule campaigns, manage AI agents and leads, review call logs, and generate a Stripe top-up link tied to your profile. Phone numbers must be E.164, and each tool call runs as your own account after OAuth sign-in.",
     "developerName": "Suarify",
     "category": "Productivity",
     "capabilities": [
-      "Place AI voice calls",
+      "Place Gemini 3.8 or OpenAI AI voice calls",
       "Manage agents and leads",
       "Check balance and top up credit"
     ],
@@ -94,7 +94,7 @@
         "commerce_description": "Suarify supports prepaid credit top-ups by returning a Stripe checkout link; the plugin does not collect payment details in ChatGPT."
       },
       "publication": {
-        "release_notes": "Initial Suarify MCP plugin package with OAuth voice calling, agent and lead tools, balance checks, top-up links, and the suarify-voice-calls skill."
+        "release_notes": "Clarify provider and voice fields, E.164 phone formatting, Gemini 3.8 versus OpenAI selection, and onboarding examples."
       }
     }
   }

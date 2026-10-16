@@ -24,7 +24,23 @@ Runtime MCP server (not in this repo):
 1. ChatGPT → Settings → Security → enable **Developer mode**
 2. Add connector / MCP: `https://mcp.suarify.my/mcp` → complete Google/OTP
 3. Optional: install this folder via a personal marketplace (see marketplace.json)
-4. Confirm tools work (profile, listAgents, getTopUpLink)
+4. Confirm tools work (profile, listAgents, getTopUpLink, and a provider-selected call in a test account)
+
+## Voice-provider fields
+
+For reliable provider selection, pass the provider and compatible voice together:
+
+```json
+{
+  "receipient_phone": "+60123456789",
+  "voice_provider": "GEMINI3.8",
+  "agent_voice": "Sulafat",
+  "agent_start_message": "Hello, this is Suarify calling.",
+  "agent_prompt": "Have a brief, helpful conversation about the stated goal."
+}
+```
+
+Use `OPENAI` with an OpenAI Realtime voice such as `alloy` when OpenAI is requested. `GEMINI3.8` is an explicit selection; if `voice_provider` is omitted, the configured agent may route the call to another provider. Always send Malaysian numbers in E.164 form (`+601...`), not local `01...` form.
 
 ## Public publish
 

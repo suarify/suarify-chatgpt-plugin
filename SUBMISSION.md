@@ -8,7 +8,7 @@ Fill the [plugin submission portal](https://developers.openai.com/plugins/deploy
 |-------|--------|
 | Plugin name | Suarify |
 | Short description | Place AI voice calls, manage agents & leads, top up prepaid credit. |
-| Long description | Suarify connects ChatGPT to your Suarify prepaid voice account. Place interactive or broadcast outbound calls (default Gemini / Sulafat), schedule campaigns, manage AI agents and leads, review call logs, and open a Stripe top-up link tied to your profile. Sign in with Google or email OTP — every tool runs as your own Suarify account. |
+| Long description | Suarify connects ChatGPT to your authenticated Suarify prepaid voice account. Place interactive or broadcast outbound calls, explicitly choose Gemini 3.8 with Sulafat or OpenAI Realtime with a compatible voice, schedule campaigns, manage AI agents and leads, review call logs, and open a Stripe top-up link tied to your profile. Phone numbers must be E.164; every tool runs as your own account after OAuth sign-in. |
 | Category | Productivity |
 | Website | https://suarify.my |
 | Support | support@suarify.my |
@@ -70,7 +70,16 @@ Serve **plain text only** (no JSON). Parent origin `https://suarify.my` is allow
 2. **List agents** — “List my voice agents.” → `listAgents` → JSON list.
 3. **Create lead** — “Add lead Maya at +6011XXXXXXX.” → `createLead` → lead id.
 4. **Top-up link** — “I need to top up credit.” → `getTopUpLink` → `checkout_url` with `client_reference_id=<profile.id>`.
-5. **Schedule call** — “Schedule a Gemini call to +60… tomorrow 10:00 +08 with greeting …” → `scheduleOutboundCall` → planned call confirmation.
+5. **Schedule call** — “Schedule a Gemini 3.8 call to +60… tomorrow 10:00 +08 with greeting …” → `scheduleOutboundCall` with `voice_provider=GEMINI3.8` and `agent_voice=Sulafat` → planned call confirmation.
+
+## Voice field guidance
+
+- `receipient_phone`: required E.164 destination, such as `+60123456789`; local `010...` input must be normalized before calling.
+- `voice_provider`: use `GEMINI3.8` to force Gemini 3.8, `GEMINI` for standard Gemini live, or `OPENAI` for OpenAI Realtime. Omit only when agent defaults are acceptable.
+- `agent_voice`: use `Sulafat` for Gemini/Gemini 3.8 or a supported OpenAI Realtime voice such as `alloy`; provider voice names are not interchangeable.
+- `agent_start_message`: optional first spoken message.
+- `agent_prompt`: optional conversation instructions and goal; never include credentials or OTPs.
+- `notification`: optional `true` for one-way broadcast calls; omit or use `false` for interactive calls.
 
 ## Negative test cases (3)
 
@@ -85,9 +94,9 @@ Serve **plain text only** (no JSON). Parent origin `https://suarify.my` is allow
 - `getTopUpLink` does not charge; it only returns the Stripe Payment Link.
 - No custom ChatGPT UI / widgets — MCP tools only (+ skill). CSP: N/A for UI-less.
 
-## Release notes (v1.0.0)
+## Release notes (v1.0.1)
 
-Initial Suarify ChatGPT plugin: OAuth MCP at mcp.suarify.my, outbound/schedule calls, agents, leads, logs, profile, TTS helpers, Stripe top-up link, and suarify-voice-calls skill.
+Clarify provider and voice fields, E.164 phone formatting, Gemini 3.8 versus OpenAI selection, and onboarding examples.
 
 ## Checklist before Submit for review
 
