@@ -1,6 +1,6 @@
 {
   "name": "suarify",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Authenticated voice calls — place a reminder, schedule one, or start a two-way call using your connected Suarify account.",
   "author": {
     "name": "Suarify",
@@ -58,6 +58,18 @@
               "prompt": "Call +60111234567, say hello, and ask whether tomorrow at 10am still works for the appointment. Do not discuss anything else.",
               "tools_triggered": "suarify_start_two_way_call",
               "expected_behavior": "After OAuth, accept the call and return only a safe status and optional call reference; do not return profile or call-log data."
+            },
+            {
+              "description": "Place an immediate reminder with a multilingual message.",
+              "prompt": "Call +60111234567 and say in Malay: Peringatan, janji temu anda esok pada pukul 10 pagi.",
+              "tools_triggered": "suarify_initiate_call",
+              "expected_behavior": "After OAuth, accept the reminder request and return only a safe status and optional call reference; preserve the user-provided Malay message."
+            },
+            {
+              "description": "Schedule a reminder using an explicit timezone-aware ISO timestamp.",
+              "prompt": "Schedule a reminder call to +60111234567 for 2030-01-15T10:00:00+08:00 and say Hello, this is your appointment reminder.",
+              "tools_triggered": "suarify_schedule_call",
+              "expected_behavior": "After OAuth, validate the timezone-aware schedule, return a scheduled status and optional call reference, and do not expose account data."
             }
           ],
           "negative": [
