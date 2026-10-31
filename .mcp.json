@@ -1,7 +1,25 @@
 {
   "mcpServers": {
     "suarify": {
-      "url": "https://mcp.suarify.my/mcp"
+      "url": "https://mcp.suarify.my/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": {
+              "mode": "cimd"
+            },
+            "resource": "https://mcp.suarify.my",
+            "baseScopes": [
+              "openid",
+              "email",
+              "profile",
+              "suarify:read",
+              "suarify:write"
+            ]
+          }
+        }
+      }
     }
   }
 }
