@@ -7,7 +7,7 @@ Fill the [plugin submission portal](https://developers.openai.com/plugins/deploy
 | Field | Value |
 |-------|--------|
 | Plugin name | Suarify |
-| Short description | Place, schedule, or start two-way voice calls. |
+| Short description | Reminders and two-way calls |
 | Long description | Suarify lets a connected user place an immediate one-way reminder call, schedule a one-way reminder call, or start an immediate two-way call. The recipient and call instructions come from the user's request. The public connector does not expose profiles, leads, agents, call history, recordings, balances, or payment details. |
 | Category | Productivity |
 | Supported countries | BN, KH, ID, LA, MY, MM, PH, SG, TH, TL, VN (ASEAN) |
@@ -69,7 +69,7 @@ Serve **plain text only** (no JSON). Parent origin `https://suarify.my` is allow
 - The public connector does not expose payment, profile, lead, agent, recording, or call-log tools.
 - No custom ChatGPT UI / widgets — MCP tools only (+ skill). CSP: N/A for UI-less.
 
-## Release notes (v1.0.6)
+## Release notes (v1.0.7)
 
 Add a user-directed two-way call option while keeping account, lead, agent, log, recording, and payment data private.
 
