@@ -1,42 +1,34 @@
 ---
 name: suarify-voice-calls
-description: Place and schedule authenticated Suarify AI voice calls, choose a supported voice provider and compatible voice, manage agents and leads, inspect call logs, check balance, and top up prepaid credit via MCP tools.
+description: Place, schedule, or start authenticated Suarify voice calls via MCP tools.
 ---
 
 # Suarify voice calling
 
-Use the **suarify** MCP tools after the user has completed OAuth (Google or email OTP).
+Use the **suarify** MCP tools after the user has completed OAuth (Google or email OTP). The public connector supports one-way reminders and immediate two-way calls, but does not expose account administration or call history.
 
 ## When to use
-- User wants to call a phone number with an AI agent
-- Broadcast / one-way notification calls
+- User wants to place an immediate one-way reminder call
 - Schedule a future outbound call
-- Check balance, profile, call logs, or get a top-up payment link
-- Create or update agents and leads
+- User explicitly wants an immediate two-way call
 
 ## Call fields and defaults
 - `receipient_phone` (required): the destination number in E.164 format, for example `+60123456789`. Do not use a local `010...` number without converting it to `+601...`.
-- `voice_provider` (optional): the supported speech-to-speech backend selector. If omitted, the configured agent may select the provider.
-- `agent_voice` (optional): the provider-compatible voice name. Do not use a voice identifier that belongs to a different provider.
 - `agent_start_message` (optional): the first sentence spoken when the recipient answers.
-- `agent_prompt` (optional): the agent's instructions and conversation goal. Keep it specific and do not put secrets or OTPs in it.
-- `notification` (optional): set `true` for a one-way broadcast message; otherwise the call is interactive.
+- `agent_prompt` (optional): the reminder content supplied by the user. Do not put secrets or OTPs in it.
+- `agent_prompt` (required for two-way calls): the conversation goal and boundaries supplied by the user. Keep it narrow and do not put secrets or OTPs in it.
+- `scheduled_at` (required for scheduling): ISO 8601 time with timezone.
 - Phone numbers must be E.164 (e.g. `+60123456789`).
 
-When the user explicitly selects a provider or voice, include both compatible values and do not rely on the agent's default. After changing provider or voice, report the selected values in the confirmation.
-
 ## Call flow
-1. Confirm recipient phone and normalize it to E.164. Explain the selected provider and voice before calling.
-2. Confirm whether the call is interactive or `notification: true` (broadcast).
-3. Confirm the opening line (`agent_start_message`) and instructions (`agent_prompt`) for interactive calls.
-4. Call `doOutboundCall` (immediate) or `scheduleOutboundCall` (planned), passing the provider and voice fields when the user selected them.
-5. Share call/token ids from the response; use `listCallLogs` to follow up.
-
-## Billing
-- Use `getProfile` for balance.
-- Use `getTopUpLink` and show the user `checkout_url` (Stripe Payment Link with their profile id). Do not invent payment URLs.
+1. Confirm recipient phone and normalize it to E.164.
+2. Confirm the reminder message and, for scheduling, the time zone and scheduled time.
+3. Call `suarify_initiate_call` for an immediate reminder, `suarify_schedule_call` for a planned reminder, or `suarify_start_two_way_call` for an immediate two-way call.
+4. Return only the safe accepted/scheduled status and optional reference from the tool.
 
 ## Safety
 - Do not place calls without a clear recipient and purpose from the user.
 - Do not expose API keys or OTP codes in chat.
 - Refuse requests that look like spam/harassment or illegal robocalling.
+- Do not request or reveal profile, balance, lead, agent, recording, call-log, or payment data through the public connector.
+- For two-way calls, confirm the user supplied the purpose and boundaries; do not invent a conversation goal.

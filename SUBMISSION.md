@@ -7,8 +7,8 @@ Fill the [plugin submission portal](https://developers.openai.com/plugins/deploy
 | Field | Value |
 |-------|--------|
 | Plugin name | Suarify |
-| Short description | Place AI voice calls, manage agents & leads, top up prepaid credit. |
-| Long description | Suarify connects ChatGPT to your authenticated Suarify prepaid voice account. Place interactive or broadcast outbound calls, choose a supported voice provider with a compatible voice, schedule campaigns, manage AI agents and leads, review call logs, and open a Stripe top-up link tied to your profile. Phone numbers must be E.164; every tool runs as your own account after OAuth sign-in. |
+| Short description | Place, schedule, or start two-way voice calls. |
+| Long description | Suarify lets a connected user place an immediate one-way reminder call, schedule a one-way reminder call, or start an immediate two-way call. The recipient and call instructions come from the user's request. The public connector does not expose profiles, leads, agents, call history, recordings, balances, or payment details. |
 | Category | Productivity |
 | Supported countries | BN, KH, ID, LA, MY, MM, PH, SG, TH, TL, VN (ASEAN) |
 | Website | https://suarify.my |
@@ -34,53 +34,27 @@ Serve **plain text only** (no JSON). Parent origin `https://suarify.my` is allow
 
 ## Tool annotations (expected after Scan Tools)
 
-| Tool | readOnly | openWorld | destructive |
-|------|----------|-----------|-------------|
-| doOutboundCall | false | true | false |
-| scheduleOutboundCall | false | false | false |
-| listAgents | true | false | false |
-| createAgent | false | false | false |
-| updateAgent | false | false | false |
-| listLeads | true | false | false |
-| createLead | false | false | false |
-| listCallLogs | true | false | false |
-| getReports | true | false | false |
-| getProfile | true | false | false |
-| updateProfile | false | false | false |
-| listVoices | true | false | false |
-| generateTts | false | false | false |
-| listWebhookConfigurations | true | false | false |
-| upsertWebhookConfiguration | false | true | false |
-| listVoiceClones | true | false | false |
-| getTopUpLink | true | false | false |
-| requestOtp | false | true | false |
-| validateOtp | false | false | false |
-| getSkillGuide | true | false | false |
+| suarify_initiate_call | false | true | false |
+| suarify_schedule_call | false | false | false |
+| suarify_start_two_way_call | false | true | false |
 
 ## Starter prompts
 
-1. Check my Suarify balance and SIP number.
-2. Create a lead for +60123456789 named Alex, then show my leads.
-3. Place a short broadcast call to +60123456789 that says our appointment is tomorrow at 10am.
-4. List my AI agents and create one named Receptionist with voice Sulafat.
-5. Give me a prepaid top-up payment link for my account.
+1. Call +60123456789 and remind them about my appointment tomorrow.
+2. Schedule a reminder call to +60123456789 for tomorrow at 10:00 +08.
+3. Start a two-way call to +60123456789 and ask whether tomorrow's appointment still works.
 
-## Positive test cases (5)
+## Positive test cases (3)
 
-1. **Profile** — Prompt: “Show my Suarify profile and balance.” → `getProfile` → returns email/balance/SIP.
-2. **List agents** — “List my voice agents.” → `listAgents` → JSON list.
-3. **Create lead** — “Add lead Maya at +6011XXXXXXX.” → `createLead` → lead id.
-4. **Top-up link** — “I need to top up credit.” → `getTopUpLink` → `checkout_url` with `client_reference_id=<profile.id>`.
-5. **Schedule call** — “Schedule a voice call to +60… tomorrow 10:00 +08 with greeting …” → `scheduleOutboundCall` with a compatible provider and voice → planned call confirmation.
+1. **Immediate reminder** — Prompt: “Call +60111234567 and remind them that our appointment is tomorrow at 10am.” → `suarify_initiate_call` → safe accepted status and optional reference only.
+2. **Scheduled reminder** — Prompt: “Schedule a voice call to +60111234567 tomorrow at 10:00 +08 with greeting Hello.” → `suarify_schedule_call` → safe scheduled status and optional reference only.
+3. **Two-way call** — Prompt: “Call +60111234567, say hello, and ask whether tomorrow at 10am still works for the appointment. Do not discuss anything else.” → `suarify_start_two_way_call` → safe accepted status and optional reference only.
 
 ## Voice field guidance
 
 - `receipient_phone`: required E.164 destination, such as `+60123456789`; local `010...` input must be normalized before calling.
-- `voice_provider`: optional supported provider selector. Omit it when the configured agent default is acceptable.
-- `agent_voice`: use a voice compatible with the selected provider; provider voice names are not interchangeable.
 - `agent_start_message`: optional first spoken message.
-- `agent_prompt`: optional conversation instructions and goal; never include credentials or OTPs.
-- `notification`: optional `true` for one-way broadcast calls; omit or use `false` for interactive calls.
+- `agent_prompt`: optional reminder content supplied by the user; never include credentials or OTPs.
 
 ## Negative test cases (3)
 
@@ -92,12 +66,12 @@ Serve **plain text only** (no JSON). Parent origin `https://suarify.my` is allow
 
 - Demo: use a dedicated Suarify reviewer account with password login and sample data; avoid MFA, email codes, and magic links.
 - Outbound calls require prepaid balance and a configured SIP / from number on the profile.
-- `getTopUpLink` does not charge; it only returns the Stripe Payment Link.
+- The public connector does not expose payment, profile, lead, agent, recording, or call-log tools.
 - No custom ChatGPT UI / widgets — MCP tools only (+ skill). CSP: N/A for UI-less.
 
-## Release notes (v1.0.4)
+## Release notes (v1.0.6)
 
-Add the reviewer demo recording, clarify provider and voice fields, E.164 phone formatting, onboarding examples, and ASEAN availability.
+Add a user-directed two-way call option while keeping account, lead, agent, log, recording, and payment data private.
 
 ## Checklist before Submit for review
 

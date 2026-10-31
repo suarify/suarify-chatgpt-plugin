@@ -1,7 +1,7 @@
 {
   "name": "suarify",
-  "version": "1.0.4",
-  "description": "Authenticated AI voice calling for businesses — choose a supported voice provider and compatible voice, place outbound calls, manage agents and leads, and top up prepaid credit.",
+  "version": "1.0.6",
+  "description": "Authenticated voice calls — place a reminder, schedule one, or start a two-way call using your connected Suarify account.",
   "author": {
     "name": "Suarify",
     "email": "support@suarify.my",
@@ -15,23 +15,22 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Suarify",
-    "shortDescription": "AI voice calls and lead tools",
-    "longDescription": "Suarify connects ChatGPT to your authenticated Suarify prepaid voice account. Place interactive or broadcast outbound calls, choose a supported voice provider with a compatible voice, schedule campaigns, manage AI agents and leads, review call logs, and generate a Stripe top-up link tied to your profile. Phone numbers must be E.164, and each tool call runs as your own account after OAuth sign-in.",
+    "shortDescription": "Place, schedule, or answer voice calls",
+    "longDescription": "Suarify lets you place an immediate one-way reminder call, schedule a one-way reminder call, or start an immediate two-way call through your connected Suarify account. The recipient and call instructions come from your request. The public connector does not expose profiles, leads, agents, call history, recordings, balances, or payment details.",
     "developerName": "Suarify",
     "category": "Productivity",
     "capabilities": [
-      "Place supported AI voice calls",
-      "Manage agents and leads",
-      "Check balance and top up credit"
+      "Place an immediate reminder call",
+      "Schedule a reminder call",
+      "Start a two-way call"
     ],
     "websiteURL": "https://suarify.my",
     "supportURL": "https://suarify.my/ttnc.html#support",
     "privacyPolicyURL": "https://suarify.my/ttnc.html#privacy",
     "termsOfServiceURL": "https://suarify.my/ttnc.html#terms",
     "defaultPrompt": [
-      "Check my Suarify balance and SIP number.",
-      "Create a lead and show my Suarify leads.",
-      "Give me a prepaid top-up payment link."
+      "Call +60123456789 and remind me about my appointment tomorrow.",
+      "Schedule a reminder call to +60123456789 for tomorrow at 10:00 +08."
     ],
     "logo": "./assets/logo.png",
     "composerIcon": "./assets/logo.png"
@@ -43,34 +42,22 @@
         "test_cases": {
           "positive": [
             {
-              "description": "Show the connected user's profile and balance.",
-              "prompt": "Show my Suarify profile and balance.",
-              "tools_triggered": "getProfile",
-              "expected_behavior": "Return the authenticated profile, balance, and SIP number."
+              "description": "Place an immediate one-way reminder call.",
+              "prompt": "Call +60111234567 and remind them that our appointment is tomorrow at 10am.",
+              "tools_triggered": "suarify_initiate_call",
+              "expected_behavior": "After OAuth, accept the request and return only a safe status and optional call reference."
             },
             {
-              "description": "List the user's voice agents.",
-              "prompt": "List my voice agents.",
-              "tools_triggered": "listAgents",
-              "expected_behavior": "Return the authenticated user's agent list."
-            },
-            {
-              "description": "Create a lead with a valid E.164 phone number.",
-              "prompt": "Add lead Maya at +60111234567.",
-              "tools_triggered": "createLead",
-              "expected_behavior": "Create and return the new lead identifier."
-            },
-            {
-              "description": "Provide a prepaid top-up link without charging the user.",
-              "prompt": "I need to top up my Suarify credit.",
-              "tools_triggered": "getTopUpLink",
-              "expected_behavior": "Return a Stripe checkout URL tied to the authenticated profile."
-            },
-            {
-              "description": "Schedule an authenticated outbound call.",
+              "description": "Schedule a one-way reminder call.",
               "prompt": "Schedule a voice call to +60111234567 tomorrow at 10:00 +08 with greeting Hello.",
-              "tools_triggered": "scheduleOutboundCall",
-              "expected_behavior": "Return a planned-call confirmation without inventing missing recipient data."
+              "tools_triggered": "suarify_schedule_call",
+              "expected_behavior": "After OAuth, return only a scheduled status and optional call reference."
+            },
+            {
+              "description": "Start an immediate two-way call with user-supplied boundaries.",
+              "prompt": "Call +60111234567, say hello, and ask whether tomorrow at 10am still works for the appointment. Do not discuss anything else.",
+              "tools_triggered": "suarify_start_two_way_call",
+              "expected_behavior": "After OAuth, accept the call and return only a safe status and optional call reference; do not return profile or call-log data."
             }
           ],
           "negative": [
@@ -80,8 +67,8 @@
               "expected_behavior": "Ask for an E.164 recipient number and do not place a call."
             },
             {
-              "description": "Require authentication before accessing account tools.",
-              "prompt": "Show my Suarify balance before I sign in.",
+              "description": "Require authentication before placing a reminder.",
+              "prompt": "Call +60111234567 before I sign in.",
               "expected_behavior": "Start the OAuth sign-in flow and do not return private account data."
             },
             {
@@ -91,11 +78,11 @@
             }
           ]
         },
-        "commerce": true,
-        "commerce_description": "Suarify supports prepaid credit top-ups by returning a Stripe checkout link; the plugin does not collect payment details in ChatGPT."
+      "commerce": false,
+      "commerce_description": "The public connector does not collect payment details or expose payment tools."
       },
       "publication": {
-        "release_notes": "Add the reviewer demo recording, clarify provider and voice fields, E.164 phone formatting, onboarding examples, and ASEAN availability.",
+        "release_notes": "Add a user-directed two-way call option while keeping account, lead, agent, log, recording, and payment data private.",
         "countries": ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "TL", "VN"]
       }
     }
